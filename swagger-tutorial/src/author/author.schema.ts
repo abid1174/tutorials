@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import { HydratedDocument, SchemaTypes } from 'mongoose';
+import { Book } from 'src/book/book.schema';
 
 export type AuthorDocument = HydratedDocument<Author>;
 
@@ -9,7 +10,13 @@ export class Author {
   name: string;
 
   @Prop()
-  age: number;
+  bio: string;
+
+  @Prop({ type: Date })
+  birthDate: Date;
+
+  @Prop({ type: [SchemaTypes.ObjectId], ref: 'Theme' })
+  booksWritten: Book[];
 }
 
 export const AuthorSchema = SchemaFactory.createForClass(Author);
